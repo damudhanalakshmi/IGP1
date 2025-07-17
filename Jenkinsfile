@@ -1,19 +1,26 @@
 pipeline {
     agent any
+
     stages {
-        stage('Compile') {
+        stage('Build WAR') {
             steps {
-                sh 'mvn compile'
+                sh 'mvn clean package'
             }
         }
-        stage('Test') {
+
+        stage('Build Docker Image') {
             steps {
-                sh 'mvn test'
+                sh 'docker build -t ABCtechnologies-image .'
             }
         }
-        stage('Package') {
+
+        stage('Deploy Container') {
             steps {
-                sh 'mvn package'
+                sh '''
+                docker stop ABCTechnologies-container || true
+                docker rm ABCTechnologies-container || true
+                docker run -d --name ABCTechnologies-container -p 8080:8080 myapp-image
+                '''
             }
         }
     }
