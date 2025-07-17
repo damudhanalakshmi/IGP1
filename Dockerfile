@@ -5,7 +5,7 @@ FROM tomcat:9.0
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy WAR file from your build context to Tomcat
-COPY target/myapp.war /usr/local/tomcat/webapps/myapp.war
+COPY target/ABCtechnologies-1.0.war /usr/local/tomcat/webapps/ABCtechnologies-1.0.war
 
 # Optional: expose port
 EXPOSE 8080
