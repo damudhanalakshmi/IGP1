@@ -1,0 +1,17 @@
+- name: Build Docker image and run container
+  hosts: docker_host
+  become: true
+  tasks:
+    - name: Build Docker image
+      docker_image:
+        name: myapp
+        path: /path/to/app
+        tag: latest
+
+    - name: Run Docker container
+      docker_container:
+        name: myapp_container
+        image: myapp:latest
+        state: started
+        ports:
+          - "8080:80"
